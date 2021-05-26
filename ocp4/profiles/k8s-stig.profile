@@ -24,16 +24,28 @@ description: |-
 
 selections:
 #     V-242376 (medium)
+#       THIS RULE DOES NOT EXIST - can not be remediated
+#   - controller_tls_min_version
 #     V-242377 (medium)
+#       THIS RULE DOES NOT EXIST - can not be remediated
+#   - scheduler_tls_min_version
 #     V-242378 (medium)
+#       THIS RULE DOES NOT EXIST
+#   - api_server_tls_min_version
 #     V-242379 (medium)
+    - etcd_auto_tls
 #     V-242380 (medium)
+    - etcd_peer_auto_tls
 #     V-242381 (high)
     - controller_use_service_account
 #     V-242382 (medium)
     - api_server_auth_mode_node
     - api_server_auth_mode_rbac
 #     V-242383 (high)
+    - general_default_namespace_use
+#       THESE RULES DO NOT EXIST
+#   - general_kube_public_namespace_use
+#   - general_kube_node_lease_namespace_use
 #     V-242384 (medium)
     - scheduler_no_bind_address
 #     V-242385 (medium)
