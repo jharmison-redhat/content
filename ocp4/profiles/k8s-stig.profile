@@ -66,18 +66,37 @@ selections:
 #     V-242392 (high)
     - kubelet_authorization_mode
 #     V-242393 (medium)
+#       THIS RULE DOES NOT EXIST
+#   - service_sshd_stopped
 #     V-242394 (medium)
+    - service_sshd_disabled
 #     V-242395 (medium)
+#       THIS RULE DOES NOT EXIST
+#   - general_kubernetes_dashboard_not_deployed
 #     V-242396 (medium)
+#       THIS RULE DOES NOT EXIST
+#   - kubectl_client_version
 #     V-242397 (high)
+#       THIS RULE DOES NOT EXIST - can not be remediated, OCP uses Kubelet static pods for core services
+#   - kubelet_static_pod_path
 #     V-242398 (medium)
+#       THIS RULE DOES NOT EXIST
+#   - kubelet_feature_gate_dynamicauditing_disabled
 #     V-242399 (medium)
+#       THIS RULE DOES NOT EXIST
+#   - kubelet_feature_gate_dynamickubeletconfig_disabled
 #     V-242400 (medium)
+#       THIS RULE DOES NOT EXIST
+#   - api_server_allalpha_disabled
 #     V-242401 (medium)
+#       THIS RULE DOES NOT EXIST
+#   - api_server_audit_policy_enabled
 #     V-242402 (medium)
     - api_server_audit_log_path
     - openshift_api_server_audit_log_path
 #     V-242403 (medium)
+#       THIS RULE DOES NOT EXIST
+#   - api_server_audit_profile_writerequestbodies
 #     V-242404 (medium)
     - kubelet_disable_hostname_override
 #     V-242405 (medium)
@@ -90,7 +109,10 @@ selections:
     - file_owner_etcd_member
     - file_groupowner_etcd_member
 #     V-242406 (medium)
+    - file_groupowner_kubelet_conf
+    - file_owner_kubelet_conf
 #     V-242407 (medium)
+    - file_permissions_kubelet_conf
 #     V-242408 (medium)
     - file_permissions_kube_apiserver
     - file_permissions_kube_controller_manager
@@ -100,10 +122,16 @@ selections:
 #     V-242409 (medium)
     - rbac_debug_role_protects_pprof
 #     V-242410 (medium)
+#       Unsure how to approach in STIG - needs to be enumerated and discussed with AO to align with PPSM CAL
 #     V-242411 (medium)
+#       Unsure how to approach in STIG - needs to be enumerated and discussed with AO to align with PPSM CAL
 #     V-242412 (medium)
+#       Unsure how to approach in STIG - needs to be enumerated and discussed with AO to align with PPSM CAL
 #     V-242413 (medium)
+#       Unsure how to approach in STIG - needs to be enumerated and discussed with AO to align with PPSM CAL
 #     V-242414 (medium)
+#       THIS RULE DOES NOT EXIST (and writing it will be strange as it depends heavily on CNI implementation)
+#   - general_non_privileged_ports
 #     V-242415 (high)
     - secrets_no_environment_variables
 #     V-242416 (medium)
