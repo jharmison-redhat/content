@@ -89,8 +89,7 @@ selections:
 #       THIS RULE DOES NOT EXIST
 #   - api_server_allalpha_disabled
 #     V-242401 (medium)
-#       THIS RULE DOES NOT EXIST
-#   - api_server_audit_policy_enabled
+    - api_server_audit_policy_enabled
 #     V-242402 (medium)
     - api_server_audit_log_path
     - openshift_api_server_audit_log_path
