@@ -22,14 +22,11 @@ rationale: |-
     of activities that have affected the system by users, administrators, or other
     system components.
 
-identifiers:
-  cci@ocp4: CCI-001464
-
 
 severity: medium
 
 references:
-    k8sSTIG@ocp4: V-242401
+  stigid@k8s: CNTR-K8-000600
 
 ocil_clause: '<tt>audit-policy-file</tt> does not contain a valid audit file path'
 

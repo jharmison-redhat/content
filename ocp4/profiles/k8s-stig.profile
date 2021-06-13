@@ -30,8 +30,7 @@ selections:
 #       THIS RULE DOES NOT EXIST - can not be remediated
 #   - scheduler_tls_min_version
 #     V-242378 (medium)
-#       THIS RULE DOES NOT EXIST
-#   - api_server_tls_min_version
+    - api_server_tls_min_version
 #     V-242379 (medium)
     - etcd_auto_tls
 #     V-242380 (medium)
@@ -80,22 +79,18 @@ selections:
 #       THIS RULE DOES NOT EXIST - can not be remediated, OCP uses Kubelet static pods for core services
 #   - kubelet_static_pod_path
 #     V-242398 (medium)
-#       THIS RULE DOES NOT EXIST
-#   - kubelet_feature_gate_dynamicauditing_disabled
+    - kubelet_feature_gate_dynamicauditing_disabled
 #     V-242399 (medium)
-#       THIS RULE DOES NOT EXIST
-#   - kubelet_feature_gate_dynamickubeletconfig_disabled
+    - kubelet_feature_gate_dynamickubeletconfig_disabled
 #     V-242400 (medium)
-#       THIS RULE DOES NOT EXIST
-#   - api_server_allalpha_disabled
+    - api_server_allalpha_disabled
 #     V-242401 (medium)
-    - api_server_audit_policy_enabled
+    - api_server_audit_log_policy_enabled
 #     V-242402 (medium)
     - api_server_audit_log_path
     - openshift_api_server_audit_log_path
 #     V-242403 (medium)
-#       THIS RULE DOES NOT EXIST
-#   - api_server_audit_profile_writerequestbodies
+    - api_server_audit_profile_allrequestbodies
 #     V-242404 (medium)
     - kubelet_disable_hostname_override
 #     V-242405 (medium)

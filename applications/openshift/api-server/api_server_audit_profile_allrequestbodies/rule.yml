@@ -1,0 +1,48 @@
+documentation_complete: true
+
+prodtype: ocp4
+
+title: 'Configure the Audit Log Policy'
+
+description: |-
+    To enable auditing on the Kubernetes API Server, the audit log policy needs to log detailed
+    information. Including the type of event, the source of the event and any
+    users or containers associated with the event. This level of information 
+    is needed in order to investigate any security incedents that may occur.
+    
+rationale: |-
+    The API server policy file allows for the following levels of auditing:
+      None - Do not log events that match the rule.
+      Metadata - Log request metadata (requesting user, timestamp, resource, verb, etc.) but not request or response body.
+      Request - Log event metadata and request body but not response body.
+      RequestResponse - Log event metadata, request, and response bodies.
+    
+    RequestResponse provides the highest level of audit information.
+
+severity: medium
+
+references:
+  stigid@k8s: CNTR-K8-000700
+
+ocil_clause: '<tt>kube-apiserver-audit-policies</tt> does not set the audit log level to RequestResponse in allrequestbodies.yaml'
+
+ocil: |-
+    Run the following command:
+    <pre>$ oc get configmap kube-apiserver-audit-policies -n openshift-kube-apiserver -ojson | jq -r '.data["allrequestbodies.yaml"]' | jq '.apiServerArguments["audit-policy-file"]'</pre>
+    The output should return a valid audit log path.
+
+warnings:
+    - general: |-
+        {{{ openshift_cluster_setting("/api/v1/namespaces/openshift-kube-apiserver/configmaps/kube-apiserver-audit-policies") | indent(8) }}}
+
+template:
+    name: yamlfile_value
+    vars:
+        ocp_data: "true"
+        filepath: '/api/v1/namespaces/openshift-kube-apiserver/configmaps/kube-apiserver-audit-policies'
+        yamlpath: '.data["allrequestbodies.yaml"]'
+        check_existence: "at_least_one_exists"
+        values:
+            - value: '- level: RequestResponse'
+              type: "string"
+              operation: "pattern match"

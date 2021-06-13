@@ -1,0 +1,43 @@
+documentation_complete: true
+
+prodtype: ocp4
+
+title: 'Kubelet - Featuregate DynamicAuditing disabled.'
+
+description: |-
+    Kubernetes DynamicAuditing must not be enabled.
+
+rationale: |-
+    Protecting the audit data from change or deletion is important when an attack
+    occurs. One way an attacker can cover their tracks is to change or delete
+    audit records. This will either make the attack unnoticeable or make it more
+    difficult to investigate how the attack took place and what changes were made.
+    The audit data can be protected through audit log file protections and user
+    authorization.
+    One way for an attacker to thwart these measures is to send the audit logs to
+    another source and filter the audited results before sending them on to the
+    original target. This can be done in Kubernetes through the configuration of
+    dynamic audit webhooks through the DynamicAuditing flag.
+
+references:
+  stigid@k8s: CNTR-K8-000450
+
+severity: medium
+
+ocil_clause: 'Feature Gate DynamicAuditing is not enabled'
+
+ocil: |-
+    Run the following command on the kubelet node(s):
+    <pre>$ grep DynamicAuditing /etc/kubernetes/kubelet.conf</pre>
+    There should be no match or the value should be set to false.
+
+template:
+  name: yamlfile_value
+  vars:
+    filepath: /etc/kubernetes/kubelet.conf
+    yamlpath: ".featureGates.DynamicAuditing"
+    check_existence: "none_exist"
+    values:
+      - value: true
+        type: "boolean"
+        operation: "equals"

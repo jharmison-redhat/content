@@ -1,0 +1,23 @@
+documentation_complete: true
+
+title: 'Disable SSH Server If Possible (Unusual)'
+
+description: |-
+    The SSH server service, sshd, is commonly needed.
+    However, if it can be disabled, do so.
+    {{{ describe_service_disable(service="sshd") }}}
+
+
+rationale: ""
+
+severity: unknown
+
+identifiers:
+    cce@rhel7: CCE-80217-3
+
+template:
+    name: service_disabled
+    vars:
+        servicename: sshd
+        packagename: openssh-server
+
