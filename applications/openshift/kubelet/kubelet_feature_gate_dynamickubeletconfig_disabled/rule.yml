@@ -1,0 +1,41 @@
+documentation_complete: true
+
+prodtype: ocp4
+
+title: 'Kubelet - Featuregate DynamicKubeletConfig disabled'
+
+description: |-
+    Kubernetes DynamicKubeletConfig must not be enabled.
+
+rationale: |-
+    Kubernetes allows a user to configure kubelets with dynamic
+    configurations. When dynamic configuration is used, the kubelet
+    will watch for changes to the configuration file. When changes
+    are made, the kubelet will automatically restart. Allowing this
+    capability bypasses access restrictions and authorizations. Using
+    this capability, an attacker can lower the security posture of
+    the kubelet, which includes allowing the ability to run arbitrary
+    commands in any container running on that node.
+
+severity: medium
+
+references:
+  stigid@k8s: CNTR-K8-000460
+
+ocil_clause: 'Feature Gate DynamicKubletConfig is not enabled'
+
+ocil: |-
+    Run the following command on the kubelet node(s):
+    <pre>$ grep DynamicKubletConfig /etc/kubernetes/kubelet.conf</pre>
+    There should be no match or the value should be set to false.
+
+template:
+  name: yamlfile_value
+  vars:
+    filepath: /etc/kubernetes/kubelet.conf
+    yamlpath: ".featureGates.DynamicKubletConfig"
+    check_existence: "none_exist"
+    values:
+      - value: true
+        type: "boolean"
+        operation: "equals"

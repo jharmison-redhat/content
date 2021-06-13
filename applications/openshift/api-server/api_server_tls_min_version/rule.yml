@@ -1,0 +1,39 @@
+documentation_complete: true
+
+prodtype: ocp4
+
+title: "API Server must use TLS 1.2, at a minimum"
+
+description: |- 
+  The integrity of the communication to the API Server must be secure.
+  The use of insecure protocols wuold leave the container platform vulnerable
+  to interception and manipulation of requests.
+
+rationale: |-
+    API Server communication contains sensitive parameters that should remain
+    encrypted in transit. Configure the API Server to use TLS 1.2 at a minimum
+    traffic.
+
+severity: medium
+
+references:
+  stigid@k8s: CNTR-K8-000170
+
+ocil_clause: "<tt>minTLSVersion</tt> is not configured, or is not set to 'VersionTLS12'"
+
+ocil: |-
+    Run the following command:
+    <pre>$ oc get configmap config -n openshift-kube-apiserver -ojson | jq -r '.data["config.yaml"]' | jq '.servingInfo["minTLSVersion"]'</pre>
+    verify that the value is set to <pre>'VersionTLS12'</pre>
+
+template:
+  name: yamlfile_value
+  vars:
+    ocp_data: "true"
+    filepath: /api/v1/namespaces/openshift-kube-apiserver/configmaps/config
+    yamlpath: '.data["config.yaml"]'
+    check_existence: "at_least_one_exists"
+    values:
+    - value: '\"minTLSVersion\":\"VersionTLS12\"'
+      operation: "pattern match"
+      type: "string"

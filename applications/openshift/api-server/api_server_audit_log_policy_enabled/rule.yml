@@ -1,0 +1,52 @@
+documentation_complete: true
+
+prodtype: ocp4
+
+title: 'Configure the Audit Log Policy'
+
+description: |-
+    To enable auditing on the Kubernetes API Server, the audit log policy must be set.
+    Edit the <tt>openshift-kube-apiserver</tt> configmap
+    and set the <tt>audit-policy-file</tt> to a suitable path and file
+    where audit logs policy configuration is defined. For example:
+    <pre>
+    "apiServerArguments":{
+      ...
+      "audit-policy-file":"/etc/kubernetes/static-pod-resources/configmaps/kube-apiserver-audit-policies/default.yaml",
+      ...
+    </pre>
+
+rationale: |-
+    Auditing of the Kubernetes API Server is not enabled by default. Auditing the API Server
+    provides a security-relevant chronological set of records documenting the sequence
+    of activities that have affected the system by users, administrators, or other
+    system components.
+
+
+severity: medium
+
+references:
+  stigid@k8s: CNTR-K8-000600
+
+ocil_clause: '<tt>audit-policy-file</tt> does not contain a valid audit file path'
+
+ocil: |-
+    Run the following command:
+    <pre>$ oc get configmap config -n openshift-kube-apiserver -ojson | jq -r '.data["config.yaml"]' | jq '.apiServerArguments["audit-policy-file"]'</pre>
+    The output should return a valid audit log path.
+
+warnings:
+    - general: |-
+        {{{ openshift_cluster_setting("/api/v1/namespaces/openshift-kube-apiserver/configmaps/config") | indent(8) }}}
+
+template:
+    name: yamlfile_value
+    vars:
+        ocp_data: "true"
+        filepath: '/api/v1/namespaces/openshift-kube-apiserver/configmaps/config'
+        yamlpath: '.data["config.yaml"]'
+        check_existence: "at_least_one_exists"
+        values:
+            - value: '\"audit-policy-file\"\s*:\s*\[\s*\".+\"\s*\]'
+              type: "string"
+              operation: "pattern match"

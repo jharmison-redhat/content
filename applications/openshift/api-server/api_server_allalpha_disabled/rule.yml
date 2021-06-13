@@ -1,0 +1,40 @@
+documentation_complete: true
+
+prodtype: ocp4
+
+title: "The Kubernetes API server must have Alpha APIs disabled."
+
+description: |- 
+  TBD
+
+rationale: |-
+    Kubernetes allows alpha API calls within the API server. The 
+    alpha features are disabled by default since they are not ready
+    for production and likely to change without notice. These 
+    features may also contain security issues that are rectified 
+    as the feature matures. To keep the Kubernetes cluster secure 
+    and stable, these alpha features must not be used.
+
+severity: medium
+
+references:
+  stigid@k8s: CNTR-K8-000470
+
+ocil_clause: "<tt>AllAlpha</tt> feature gate is enabled"
+
+ocil: |-
+    Run the following command:
+    <pre>$ oc get configmap config -n openshift-kube-apiserver -ojson | jq -r '.data["config.yaml"]' | jq -r '.apiServerArguments["feature-gates"]'</pre>
+    verify that the feature AllAlpha is not present or set to <pre>'false'</pre>
+
+template:
+  name: yamlfile_value
+  vars:
+    ocp_data: "true"
+    filepath: /api/v1/namespaces/openshift-kube-apiserver/configmaps/config
+    yamlpath: '.data["config.yaml"]'
+    check_existence: "none_exist"
+    values:
+    - value: 'AllAlpha=true'
+      operation: "pattern match"
+      type: "string"
