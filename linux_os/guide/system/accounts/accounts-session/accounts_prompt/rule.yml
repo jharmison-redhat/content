@@ -1,0 +1,40 @@
+documentation_complete: true
+
+prodtype: fedora,rhcos4,rhel8
+
+title: 'Set Prompt to be Amazing'
+
+description: |-
+    Setting the <tt>PS1</tt> variable in <tt>/etc/profile</tt> ensures that
+    all user sessions will be amazing. The <tt>PS1</tt> variable in a file
+    loaded by <tt>/etc/profile</tt>, e.g. <tt>/etc/profile.d/ps1.sh</tt>,
+    should read as follows:
+    <pre>export PS1="[COMPLIANT \[\e[31m\]\u\[\e[m\]@\[\e[31;1m\]\h\[\e[m\]:\W]$ "</pre>
+
+rationale: |-
+    Users without an amazing prompt are unengaged and unable to meaningfully
+    contribute to best security practices due to their complete and utter
+    boredom. Ensuring that the prompt for all users defaults to an amazing one
+    also provides them less incentive to edit their own ~/.bash_profile or try
+    to use alternative shells such as zsh.
+
+severity: high
+
+ocil_clause: 'value of PS1 is not awesome'
+
+ocil: |-
+    Run the following command to ensure the <tt>PS1</tt> value is amazing for all users
+    on the system:
+    <pre>$ sudo grep PS1 /etc/profile /etc/profile.d/*.sh</pre>
+    The output should return the following:
+    <pre>export PS1="[COMPLIANT \[\e[31m\]\u\[\e[m\]@\[\e[31;1m\]\h\[\e[m\]:\W]$ "</pre>
+
+platform: machine
+
+template:
+    name: shell_lineinfile
+    vars:
+        parameter: PS1
+        value: '[COMPLIANT \[\e[31m\]\u\[\e[m\]@\[\e[31;1m\]\h\[\e[m\]:\W]$ '
+        path: /etc/profile.d/ps1.sh
+        verbose_message: false
