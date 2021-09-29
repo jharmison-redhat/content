@@ -234,19 +234,18 @@ spec:
   High level macro to generate Kubernetes remediation to set a shell variable in a file such as /etc/profile.
 #}}
 {{%- macro kubernetes_machine_config_shell_file(path='', file_permissions_mode='0640', parameter='', value='', no_quotes=false) -%}}
-{{% if no_quotes -%}}
-  {{% if "$" in value %}}
-  {{% set value = '%s' % value.replace("$", "\\$") %}}
-  {{% endif %}}
+{{%- if no_quotes -%}}
+  {{%- if "$" in value -%}}
+    {{%- set value = '%s' % value.replace("$", "\\$") -%}}
+  {{%- endif -%}}
 {{%- else -%}}
-  {{% if "$" in value %}}
-  {{% set value = '\\"%s\\"' % value.replace("$", "\\$") %}}
-  {{% else %}}
-  {{% set value = "'%s'" % value %}}
-  {{% endif %}}
+  {{%- if "$" in value -%}}
+    {{%- set value = '\\"%s\\"' % value.replace("$", "\\$") -%}}
+  {{% else -%}}
+    {{%- set value = "'%s'" % value -%}}
+  {{%- endif -%}}
 {{%- endif -%}}
-{{% set source = parameter + "=" + value %}}
-{{{ kubernetes_machine_config_file(path=path, file_permissions_mode=file_permissions_mode, source=source) }}}
+{{{ kubernetes_machine_config_file(path=path, file_permissions_mode=file_permissions_mode, source=parameter + "=" + value) }}}
 {{%- endmacro -%}}
 
 {{#
