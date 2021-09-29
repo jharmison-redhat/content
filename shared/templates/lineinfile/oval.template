@@ -1,7 +1,8 @@
 {{%- set regex = "^[\s]*" ~ (TEXT | escape_regex) ~ "[\s]*$" -%}}
+{{%- set quoted = (TEXT | replace('"', '&quot;')) -%}}
 <def-group>
   <definition class="compliance" id="{{{ rule_id }}}" version="1">
-    {{{ oval_metadata("Check presence of " + TEXT + " in " + PATH) }}}
+    {{{ oval_metadata("Check presence of " + quoted + " in " + PATH) }}}
     <criteria operator="AND" comment="Test conditions - presence of the file plus {{{ OVAL_EXTEND_DEFINITIONS | length }}} extra definitions.">
       {{%- for def in OVAL_EXTEND_DEFINITIONS %}}
      <extend_definition comment="extend_definition added explicitly" definition_ref="{{{ def }}}" />
@@ -11,7 +12,7 @@
   </definition>
 
   <ind:textfilecontent54_test check="all"
-  comment="tests the presence of '{{{ TEXT }}}' setting in the {{{ PATH }}} file"
+  comment="tests the presence of '{{{ quoted }}}' setting in the {{{ PATH }}} file"
   id="test_{{{ rule_id }}}" version="1">
   <ind:object object_ref="obj_{{{ rule_id }}}" />
   </ind:textfilecontent54_test>

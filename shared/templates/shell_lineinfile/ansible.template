@@ -3,7 +3,11 @@
 # strategy = restrict
 # complexity = low
 # disruption = low
-{{% set msg = "shell-style assignment of '" ~ PARAMETER ~ "' to '" ~ VALUE ~ "' in '" ~ PATH ~ "'" -%}}
+{{%- if VERBOSE_MESSAGE -%}}
+	{{% set msg = "shell-style assignment of '" ~ PARAMETER ~ "' to '" ~ VALUE ~ "' in '" ~ PATH ~ "'" -%}}
+{{%- else -%}}
+	{{% set msg = "shell-style assignment of '" ~ PARAMETER ~ "' in '" ~ PATH ~ "'" -%}}
+{{%- endif -%}}
 {{%- if NO_QUOTES -%}}
 	{{% set msg = "Setting unquoted " ~ msg %}}
 {{%- else -%}}
@@ -18,4 +22,3 @@
         no_quotes=NO_QUOTES
     )
 }}}
-
