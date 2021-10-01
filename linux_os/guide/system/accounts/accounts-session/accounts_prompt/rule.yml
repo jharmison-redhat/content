@@ -20,6 +20,10 @@ rationale: |-
 
 severity: high
 
+identifiers:
+    cce@rhcos4: CCE-85858-9
+    cce@rhel8: CCE-85859-7
+
 ocil_clause: 'value of PS1 is not awesome'
 
 ocil: |-
