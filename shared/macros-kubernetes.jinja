@@ -240,7 +240,7 @@ spec:
   {{%- endif -%}}
 {{%- else -%}}
   {{%- if "$" in value -%}}
-    {{%- set value = '\\"%s\\"' % value.replace("$", "\\$") -%}}
+    {{%- set value = '"%s"' % value.replace("$", "\\$") -%}}
   {{% else -%}}
     {{%- set value = "'%s'" % value -%}}
   {{%- endif -%}}
