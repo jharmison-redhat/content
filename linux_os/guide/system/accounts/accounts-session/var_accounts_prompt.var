@@ -1,0 +1,75 @@
+documentation_complete: true
+
+title: 'Account Shell Prompt'
+
+description: |-
+    In an interactive shell, the prompt that is displayed to inform the user of
+    their immediate context in the shell and availability to receive commands is
+    derived from the value of the PS1 variable. This variable can either be set in
+    the user's profile or shell run control files, or applied system wide.
+
+    Additional variables can further enhance the prompt that is displayed, such as
+    the value of the PROMPT_COMMAND variable. PROMPT_COMMAND is evaluated just before
+    each time the user's prompt would be displayed, allowing for modification of the
+    value of PS1 just before it is shown.
+
+type: string
+
+operator: equals
+
+interactive: false
+
+{{% set colorful_prompt="export COLOR_OFFSET=0
+export COLOR_CYCLE_COUNT=8
+export COLOR_FOREGROUND=30
+export COLOR_BACKGROUND=40
+
+function __next_color {
+    (( COLOR_OFFSET++ ))
+    (( COLOR_OFFSET %= COLOR_CYCLE_COUNT ))
+}
+
+function __fg_color {
+    printf $(( COLOR_FOREGROUND + COLOR_OFFSET ))
+}
+
+function __bg_color {
+    printf $(( COLOR_BACKGROUND + COLOR_CYCLE_COUNT - COLOR_OFFSET - 1 ))
+}
+
+function __color_pairing {
+    echo -e \"\e[1;$(__fg_color);$(__bg_color)m\]\"
+}
+
+function __wrap_color {
+    echo -e \"$(__color_pairing)${1}\e[0m\]\"
+}
+
+function __prompt_command {
+    export PS1='['
+    PS1+=\"$(__wrap_color '\u')@\"
+    __next_color
+    PS1+=\"$(__wrap_color '\h') \"
+    __next_color
+    PS1+=\"$(__wrap_color '\W')\"
+    __next_color
+    PS1+=']\$ '
+}
+
+export PROMPT_COMMAND=__prompt_command" %}}
+
+options:
+    colorful: {{{ colorful_prompt }}}
+    boring: '[\u@\h \W]\$ '
+    tricky: |-
+        function __fake_login {
+            stty -echo
+            echo -n "Password: "
+            read; echo
+            echo "Login failed."
+            stty echo
+        }
+        export PS1="Login: "
+        alias root=__fake_login
+        alias core=__fake_login
+    default: {{{ colorful_prompt }}}

@@ -1,0 +1,43 @@
+documentation_complete: true
+
+prodtype: fedora,rhcos4,rhel8
+
+title: 'Set Prompt to be Amazing'
+
+description: |-
+    Setting the <tt>PS1</tt> variable in <tt>/etc/profile</tt> ensures that
+    all user sessions will be amazing. The <tt>PS1</tt> variable in a file
+    loaded by <tt>/etc/profile</tt>, e.g. <tt>/etc/profile.d/ps1.sh</tt>,
+    should read as follows:
+    <pre>{{{ xccdf_value("var_accounts_prompt") }}}</pre>
+
+rationale: |-
+    Users without an amazing prompt are unengaged and unable to meaningfully
+    contribute to best security practices due to their complete and utter
+    boredom. Ensuring that the prompt for all users defaults to an amazing one
+    also provides them less incentive to edit their own ~/.bash_profile or try
+    to use alternative shells such as zsh.
+
+severity: high
+
+identifiers:
+    cce@rhcos4: CCE-85858-9
+    cce@rhel8: CCE-85859-7
+
+ocil_clause: 'value of PS1 is not awesome'
+
+ocil: |-
+    Run the following command to ensure the <tt>PS1</tt> value is amazing for all users
+    on the system:
+    <pre>$ cat /etc/profile.d/ps1.sh</pre>
+    The output should return the following:
+    <pre>{{{ xccdf_value("var_accounts_prompt") }}}</pre>
+
+platform: machine
+
+template:
+    name: file_content
+    vars:
+        path: /etc/profile.d/ps1.sh
+        content: |-
+            {{{ xccdf_value("var_accounts_prompt") }}}
