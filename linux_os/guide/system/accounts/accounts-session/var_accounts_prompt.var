@@ -19,7 +19,7 @@ operator: equals
 
 interactive: false
 
-{{% set colorful_prompt="export COLOR_OFFSET=0
+{{% set colorful_prompt="""export COLOR_OFFSET=0
 export COLOR_CYCLE_COUNT=8
 export COLOR_FOREGROUND=30
 export COLOR_BACKGROUND=40
@@ -38,25 +38,25 @@ function __bg_color {
 }
 
 function __color_pairing {
-    echo -e \"\e[1;$(__fg_color);$(__bg_color)m\]\"
+    echo -e "\e[1;$(__fg_color);$(__bg_color)m\]"
 }
 
 function __wrap_color {
-    echo -e \"$(__color_pairing)${1}\e[0m\]\"
+    echo -e "$(__color_pairing)${1}\e[0m\]"
 }
 
 function __prompt_command {
     export PS1='['
-    PS1+=\"$(__wrap_color '\u')@\"
+    PS1+="$(__wrap_color '\u')@"
     __next_color
-    PS1+=\"$(__wrap_color '\h') \"
+    PS1+="$(__wrap_color '\h') "
     __next_color
-    PS1+=\"$(__wrap_color '\W')\"
+    PS1+="$(__wrap_color '\W')"
     __next_color
     PS1+=']\$ '
 }
 
-export PROMPT_COMMAND=__prompt_command" %}}
+export PROMPT_COMMAND=__prompt_command""" %}}
 
 options:
     colorful: {{{ colorful_prompt }}}
