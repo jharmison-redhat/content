@@ -1,0 +1,5 @@
+{{{ oval_file_contents(
+    filepath=PATH,
+    filepath_id=rule_id
+    contents=CONTENT
+) -}}}
