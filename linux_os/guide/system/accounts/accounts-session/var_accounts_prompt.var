@@ -56,20 +56,21 @@ function __prompt_command {
     PS1+=']\$ '
 }
 
-export PROMPT_COMMAND=__prompt_command""" %}}
+export PROMPT_COMMAND=__prompt_command""" -%}}
+
+{{% set tricky_prompt="""function __fake_login {
+    stty -echo
+    echo -n "Password: "
+    read; echo
+    echo "Login failed."
+    stty echo
+}
+export PS1="Login: "
+alias root=__fake_login
+alias core=__fake_login""" -%}}
 
 options:
-    colorful: {{{ colorful_prompt }}}
-    boring: '[\u@\h \W]\$ '
-    tricky: |-
-        function __fake_login {
-            stty -echo
-            echo -n "Password: "
-            read; echo
-            echo "Login failed."
-            stty echo
-        }
-        export PS1="Login: "
-        alias root=__fake_login
-        alias core=__fake_login
-    default: {{{ colorful_prompt }}}
+    colorful: {{{ colorful_prompt|escape_regex }}}
+    boring: {{{ '[\u@\h \W]\$ '|escape_regex }}}
+    tricky: {{{ tricky_prompt|escape_regex }}}
+    default: {{{ colorful_prompt|escape_regex }}}
